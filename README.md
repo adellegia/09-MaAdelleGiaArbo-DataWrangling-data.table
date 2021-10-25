@@ -22,7 +22,6 @@ The goals of this session are to (1) equip you with conceptual knowledge about t
 
 ## Further resources
 
-- [dplyr overview at dplyr.tidyverse.org](https://dplyr.tidyverse.org/)
 - [data.table Cheat Sheet](https://s3.amazonaws.com/assets.datacamp.com/blog_assets/datatable_Cheat_Sheet_R.pdf)
 
 
@@ -32,6 +31,6 @@ The material in this repository is made available under the [MIT license](http:/
 
 ## Statement of contributions
 
-**Ma. Adelle Gia Arbo** prepared the practice material and post-processed the recording.
+**Ma. Adelle Gia Arbo** prepared the ...
 
-**Viraaj Akuthota** prepared the presentation slides and recording. He also provided an example to the practice material.
+**Viraaj Akuthota** prepared the ...
