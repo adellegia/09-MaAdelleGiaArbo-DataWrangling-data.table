@@ -16,8 +16,8 @@ The goals of this session are to (1) equip you with conceptual knowledge about t
 
 ## Instructors
 
-- Ma. Adelle Gia Arbo ([github](https://github.com/adellegia), [linkedin](https://www.linkedin.com/in/ma-adelle-gia-arbo/)
-- Viraaj Akuthota ([github](), 
+- Ma. Adelle Gia Arbo ([github](https://github.com/adellegia), [linkedin](https://www.linkedin.com/in/ma-adelle-gia-arbo/))
+- Viraaj Akuthota ([github]())
 
 
 ## Further resources
