@@ -1,0 +1,121 @@
+---
+title: "data.table"
+subtitle: "Data wrangling at scale in R"
+author: "Ma Adelle Gia Arbo"
+date: "10/23/2021"
+output: 
+  html_document:
+    toc: TRUE
+    df_print: paged
+    number_sections: FALSE
+    highlight: tango
+    theme: lumen
+    toc_depth: 3
+    toc_float: true
+    css: custom.css 
+    self_contained: false
+    includes:
+      after_body: footer.html
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+Add intro*
+
+
+---
+# data.table `r emo::ji("video")`
+
+
+# Creating a data table
+```{r}
+library(data.table)
+```
+
+Load "airquality" dataset.
+```{r}
+head(airquality)
+
+class(airquality)
+```
+We create a data table using the as.data.table(). airqualityDT is both a data frame and a data table.
+```{r}
+airqualityDT <- as.data.table(airquality)
+
+class(airqualityDT)
+```
+Packages and functions that work with data frames also work for data tables.
+```{r}
+names(airqualityDT)
+dim(airqualityDT)
+str(airqualityDT)
+```
+We can also use data.table() to create data tables.
+```{r}
+DT <- data.table(x = 1:8,
+                 y = round(pi*1:8,2),
+                 z = letters[1:8])
+DT
+```
+
+
+# Indexing and Subsetting data tables
+```{r}
+# no need to put comma in selecting rows
+airqualityDT[1:2]
+
+# selecting columns
+airqualityDT[,1:2]
+
+# no need to put "airqualityDT$" when calling a variable or column
+airqualityDT[,list(Ozone, Solar.R)]
+airqualityDT[1, .(Ozone, Solar.R)]
+
+# selecting first row, second column
+airqualityDT[1,2]
+
+airqualityDT[1,2, with = FALSE]
+
+airqualityDT[1,Solar.R]
+
+airqualityDT[1,list(Solar.R, Temp)]
+
+airqualityDT[1, .(Solar.R, Temp)]
+
+# returns a vector
+airqualityDT[1, c(Solar.R, Temp)]
+```
+# Summarizing data
+```{r}
+# The basic arguments within brackets are NOT row 
+# and column numbers but rather "i", "j" and "by".
+# Say you have a data table called DT. In words, DT[i, j, by] translates to "Take
+# DT, subset rows using i, then calculate j grouped by by".
+airqualityDT[,.(meanTemp = mean(Temp), sdOpen = sd(Temp))]
+
+airqualityDT[,.(meanTemp = mean(Temp), sdOpen = sd(Temp)), by = .(Month)]
+# you can drop . if you only have one argument
+
+```
+# Plotting data
+```{r}
+airqualityDT[,plot(Month, meanTemp = mean(Temp), main="Average Temperature")]
+```
+
+# Chaining
+Like piping using dplyr
+```{r}
+
+```
+
+# Creating, assigning, and saving new variables
+```{r}
+
+```
+
+# Exercise
+dplyr vs. data.table
+```{r}
+```
