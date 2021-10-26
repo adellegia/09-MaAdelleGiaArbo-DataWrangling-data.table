@@ -1,8 +1,5 @@
 ---
-title: "data.table"
-subtitle: "Data wrangling at scale in R"
-author: "Ma Adelle Gia Arbo"
-date: "10/23/2021"
+title: "Data wrangling at scale with data.table"
 output: 
   html_document:
     toc: TRUE
@@ -21,87 +18,180 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 ```
+---
+# data.table `r emo::ji("video")`
 
 Add intro*
 
 
----
-# data.table `r emo::ji("video")`
-
-
-# Creating a data table
+# Importing data with `fread()`
 ```{r}
 library(data.table)
 ```
 
-Load "airquality" dataset.
+Let's download and read the mt dataset using fread.
 ```{r}
-head(airquality)
+mt <- fread("https://raw.githubusercontent.com/selva86/datasets/master/mtcars.csv")
+```
 
+`fread()` short for fast read is the data.table's version of `read_csv()`. 
+`fread()` is at least 20 times faster! Let's check it out!
+```{r}
+# Create a large .csv file
+set.seed(28)
+trial <- data.frame(matrix(runif(10000000), nrow=1000000))
+#write.csv(trial, 'trial.csv', row.names = F)
+
+# Time taken by read.csv to import
+#system.time({trial_df <- read.csv('trial.csv')})
+
+# Time taken by fread to import
+#system.time({trial_df <- fread('trial.csv')})
+```
+
+# Creating data tables
+
+```{r}
 class(airquality)
 ```
-We create a data table using the as.data.table(). airqualityDT is both a data frame and a data table.
-```{r}
-airqualityDT <- as.data.table(airquality)
+To convert a data frame to a data table, we can either use:
 
-class(airqualityDT)
-```
-Packages and functions that work with data frames also work for data tables.
+* `data.table()` and `as.data.table()` - creates a copy of the data and converts it to a data.table
+
+* `setDT()` - the data itself gets converted to a data.table, no need to assign to a new object
+
+We use the built-in R data set airquality as an example.
 ```{r}
-names(airqualityDT)
-dim(airqualityDT)
-str(airqualityDT)
+class(airquality)
+airqualityDT <- as.data.table(airquality)
+class(airqualityDT)
+
+mtDT <- as.data.table(mt)
 ```
-We can also use data.table() to create data tables.
+
+We also use `data.table()` to create data tables.
 ```{r}
 DT <- data.table(x = 1:8,
                  y = round(pi*1:8,2),
                  z = letters[1:8])
-DT
+knitr::kable(DT)
 ```
 
+Packages and functions that work with data frames also work for data tables.
+```{r}
+names(mtDT)
+dim(mtDT)
+str(mtDT)
+```
+For reference, the mt dataset has the following numeric variables:
+
+- [, 1]	**mpg**   - Miles/(US) gallon
+- [, 2]	**cyl**   - Number of cylinders
+- [, 3]	**disp**  - Displacement (cu.in.)
+- [, 4]	**hp**    - Gross horsepower
+- [, 5]	**drat**  - Rear axle ratio
+- [, 6]	**wt**    - Weight (1000 lbs)
+- [, 7]	**qsec**  - 1/4 mile time
+- [, 8]	**vs**    - Engine (0 = V-shaped, 1 = straight)
+- [, 9]	**am**    - Transmission (0 = automatic, 1 = manual)
+- [,10]	**gear**  - Number of forward gears
+- [,11]	**carb**  - Number of carburetors
 
 # Indexing and Subsetting data tables
+Let's compare filtering using conditional statements in a data frame vs. in a data table. In the data table, you only need to pass the column names!
+```{r}
+mt[mt$cyl == 6 & mt$gear == 4, ]
+
+# datatable syntax
+mtDT[cyl==6 & gear==4, ]
+```
+
+## Filtering rows
+```{r}
+# select a row
+mtDT[1,]
+
+# selecting first five rows
+mtDT[1:5,]
+```
+
+## Selecting columns
 ```{r}
 # no need to put comma in selecting rows
-airqualityDT[1:2]
+mtDT[1:2]
 
 # selecting columns
-airqualityDT[,1:2]
+mtDT[,1:2]
 
-# no need to put "airqualityDT$" when calling a variable or column
-airqualityDT[,list(Ozone, Solar.R)]
-airqualityDT[1, .(Ozone, Solar.R)]
+# no need to put "mtDT$" when calling a variable or column
+mtDT[,list(mpg, cyl)]
+mtDT[, .(mpg, cyl)]
 
+# selecting multiple columns using a character vector
+col <- c('mpg', 'cyl', 'disp')
+
+# returns an error
+# mtDT[, col] 
+
+mtDT[, col, with = FALSE]
+mtDT[, ..col]
+```
+## Subsetting rows and columns
+```{r}
 # selecting first row, second column
-airqualityDT[1,2]
+mtDT[1,2]
 
-airqualityDT[1,2, with = FALSE]
+mtDT[1,cyl]
 
-airqualityDT[1,Solar.R]
+mtDT[1,list(mpg, cyl)]
 
-airqualityDT[1,list(Solar.R, Temp)]
-
-airqualityDT[1, .(Solar.R, Temp)]
+mtDT[1, .(mpg, cyl)]
 
 # returns a vector
-airqualityDT[1, c(Solar.R, Temp)]
+mtDT[1, c(mpg, cyl)]
 ```
+
+
+# Modifying columns
+## Dropping columns
+```{r}
+col <- c('mpg', 'cyl', 'disp')
+
+mtDT[, !col, with = FALSE]
+mtDT[, !..col, with = FALSE]
+```
+
+## Renaming columns using `setnames()`
+```{r}
+setnames(mtDT, 'vs', 'engine_type')
+names(mtDT) # vs renamed to engine_type
+```
+
+
+## Creating, assigning, and saving new variables
+```{r}
+mtDT[, cyl_gear := cyl + gear]
+
+mtDT[, cyl_gear] # returns a vector
+mtDT[, "cyl_gear"] # returns the column
+```
+
+To create multiple columns,
+```{r}
+mtDT[,  `:=`(cyl_gear3 = cyl * gear,
+                  cyl_gear4 = cyl - gear)]
+mtDT
+```
+
 # Summarizing data
+The basic arguments within brackets are NOT row and column numbers but rather "i", "j" and "by". Say you have a data table called DT. In words, DT[i, j, by] translates to "Take DT, subset rows using **i**, then calculate **j** grouped by **by**".
 ```{r}
-# The basic arguments within brackets are NOT row 
-# and column numbers but rather "i", "j" and "by".
-# Say you have a data table called DT. In words, DT[i, j, by] translates to "Take
-# DT, subset rows using i, then calculate j grouped by by".
-airqualityDT[,.(meanTemp = mean(Temp), sdOpen = sd(Temp))]
+mtDT[,.(mean_hp = mean(hp), sd_hp = sd(hp))]
 
-airqualityDT[,.(meanTemp = mean(Temp), sdOpen = sd(Temp)), by = .(Month)]
-# you can drop . if you only have one argument
+mtDT[,.(mean_hp = mean(hp), sd_hp = sd(hp)), by = .(engine_type)]
 
-```
-# Plotting data
-```{r}
-airqualityDT[,plot(Month, meanTemp = mean(Temp), main="Average Temperature")]
+# you can remove the . if you're only grouping using one variable
+mtDT[,.(mean_hp = mean(hp), sd_hp = sd(hp)), by = engine_type]
 ```
 
 # Chaining
@@ -110,10 +200,11 @@ Like piping using dplyr
 
 ```
 
-# Creating, assigning, and saving new variables
+# Plotting data
 ```{r}
-
+#mtDT[,barplot(vs, mean_hp = mean(hp), main="Average Horsepower"), by = .(carname)]
 ```
+
 
 # Exercise
 dplyr vs. data.table
