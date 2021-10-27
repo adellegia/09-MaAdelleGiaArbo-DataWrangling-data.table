@@ -11,7 +11,7 @@
 
 
 
-<title>Data wrangling at scale with data.table</title>
+<title>Data Wrangling at Scale with data.table</title>
 
 <script src="DataWrangling_files/header-attrs-2.11/header-attrs.js"></script>
 <script src="DataWrangling_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -324,16 +324,18 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Data wrangling at scale with data.table</h1>
+<h1 class="title toc-ignore">Data Wrangling at Scale with data.table</h1>
 
 </div>
 
 
-<hr />
-<div id="data.table" class="section level1">
-<h1>data.table 📷</h1>
-<p>Data.table provides an efficient and high performance alternative of base R’s data.frame when conducting data wrangling.</p>
+<div id="whats-data-wrangling" class="section level1">
+<h1>What’s data wrangling? 🤔</h1>
 <p>Data wrangling is the process of converting raw data to another format which can be readily analyzable.</p>
+</div>
+<div id="data.table" class="section level1">
+<h1>data.table 📻</h1>
+<p><code>data.table</code> provides an efficient and high performance alternative of base R’s data.frame when conducting data wrangling.</p>
 <p><code>data.table</code> enables this efficiency by providing:</p>
 <ul>
 <li>concise syntax: fast to type, fast to read</li>
@@ -343,10 +345,8 @@ div.tocify {
 <li>a large community</li>
 <li>rich features</li>
 </ul>
-<p>It’s worth noting that dtplyr allows you to write dplyr code that can be automatically translated to the equivalent data.table code.</p>
-</div>
-<div id="importing-data-with-fread." class="section level1">
-<h1>Importing data with <code>fread()</code>.</h1>
+<div id="importing-with-fread" class="section level2">
+<h2>Importing with <code>fread()</code></h2>
 <p>Let’s download and read the mt dataset using fread.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>mt <span class="ot">&lt;-</span> <span class="fu">fread</span>(<span class="st">&quot;https://raw.githubusercontent.com/selva86/datasets/master/mtcars.csv&quot;</span>)</span></code></pre></div>
@@ -362,8 +362,8 @@ div.tocify {
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Time taken by fread to import</span></span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#system.time({trial_df &lt;- fread(&#39;trial.csv&#39;)})</span></span></code></pre></div>
 </div>
-<div id="creating-data-tables" class="section level1">
-<h1>Creating data tables</h1>
+<div id="creating-data-tables" class="section level2">
+<h2>Creating data tables</h2>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(airquality)</span></code></pre></div>
 <pre><code>## [1] &quot;data.frame&quot;</code></pre>
 <p>To convert a data frame to a data table, we can either use:</p>
@@ -472,8 +472,10 @@ div.tocify {
 <li>[,11] <strong>carb</strong> - Number of carburetors</li>
 </ul>
 </div>
-<div id="indexing-and-subsetting-data-tables" class="section level1">
-<h1>Indexing and Subsetting data tables</h1>
+</div>
+<div id="data-manipulation-with-data.table" class="section level1">
+<h1>Data manipulation with <code>data.table</code></h1>
+<p>The basic arguments within brackets are NOT row and column numbers but rather “i”, “j” and “by”. Say you have a data table called DT. In words, DT[i, j, by] translates to “Take DT, subset rows using <strong>i</strong>, then calculate <strong>j</strong> grouped by <strong>by</strong>”. <img src="data_table_syntax.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Let’s compare filtering using conditional statements in a data frame vs. in a data table. In the data table, you only need to pass the column names!</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>mt[mt<span class="sc">$</span>cyl <span class="sc">==</span> <span class="dv">6</span> <span class="sc">&amp;</span> mt<span class="sc">$</span>gear <span class="sc">==</span> <span class="dv">4</span>, ]</span></code></pre></div>
 <div data-pagedtable="false">
@@ -581,8 +583,8 @@ div.tocify {
 <pre><code>## [1] 4.582576 6.000000</code></pre>
 </div>
 </div>
-<div id="modifying-columns" class="section level1">
-<h1>Modifying columns</h1>
+<div id="modifying-variables" class="section level1">
+<h1>Modifying variables</h1>
 <div id="dropping-columns" class="section level2">
 <h2>Dropping columns</h2>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>col <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;mpg&#39;</span>, <span class="st">&#39;cyl&#39;</span>, <span class="st">&#39;disp&#39;</span>)</span>
@@ -608,8 +610,8 @@ div.tocify {
 ##  [6] &quot;wt&quot;          &quot;qsec&quot;        &quot;engine_type&quot; &quot;am&quot;          &quot;gear&quot;       
 ## [11] &quot;carb&quot;        &quot;fast&quot;        &quot;cars&quot;        &quot;carname&quot;</code></pre>
 </div>
-<div id="creating-assigning-and-saving-new-variables" class="section level2">
-<h2>Creating, assigning, and saving new variables</h2>
+<div id="assigning-and-saving-new-variables" class="section level2">
+<h2>Assigning and saving new variables</h2>
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>mtDT[, cyl_gear <span class="sc">:</span><span class="er">=</span> cyl <span class="sc">+</span> gear]</span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>mtDT[, cyl_gear] <span class="co"># returns a vector</span></span></code></pre></div>
@@ -634,7 +636,6 @@ div.tocify {
 </div>
 <div id="summarizing-data" class="section level1">
 <h1>Summarizing data</h1>
-<p>The basic arguments within brackets are NOT row and column numbers but rather “i”, “j” and “by”. Say you have a data table called DT. In words, DT[i, j, by] translates to “Take DT, subset rows using <strong>i</strong>, then calculate <strong>j</strong> grouped by <strong>by</strong>”.</p>
 <div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>mtDT[,.(<span class="at">mean_hp =</span> <span class="fu">mean</span>(hp), <span class="at">sd_hp =</span> <span class="fu">sd</span>(hp))]</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
@@ -657,20 +658,29 @@ div.tocify {
 </div>
 <div id="chaining" class="section level1">
 <h1>Chaining</h1>
-<p>Like piping using dplyr</p>
+<p>Chaining is like piping in <code>dplyr</code>. You only need to attach square brackets at the end to add an additional step in the analysis. For example, we want to return the average mpg, disp, wt, qsec. Then, order the results by cyl.</p>
 <div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>mtDT[, .(<span class="at">mean_mpg=</span><span class="fu">mean</span>(mpg),</span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">mean_disp=</span><span class="fu">mean</span>(disp),</span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">mean_wt=</span><span class="fu">mean</span>(wt),</span>
-<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">mean_qsec=</span><span class="fu">mean</span>(qsec)), by<span class="ot">=</span>cyl]</span></code></pre></div>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">mean_disp=</span><span class="fu">mean</span>(disp),</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">mean_wt=</span><span class="fu">mean</span>(wt),</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">mean_qsec=</span><span class="fu">mean</span>(qsec)), by<span class="ot">=</span>cyl]</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["cyl"],"name":[1],"type":["int"],"align":["right"]},{"label":["mean_mpg"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["mean_disp"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["mean_wt"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["mean_qsec"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"6","2":"4.440690","3":"183.3143","4":"3.117143","5":"17.97714"},{"1":"4","2":"5.147091","3":"105.1364","4":"2.285727","5":"19.13727"},{"1":"8","2":"3.872129","3":"353.1000","4":"3.999214","5":"16.77214"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>mtDT[, .(<span class="at">mean_mpg=</span><span class="fu">mean</span>(mpg),</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">mean_disp=</span><span class="fu">mean</span>(disp),</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">mean_wt=</span><span class="fu">mean</span>(wt),</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">mean_qsec=</span><span class="fu">mean</span>(qsec)), by<span class="ot">=</span>cyl][<span class="fu">order</span>(cyl),]</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["cyl"],"name":[1],"type":["int"],"align":["right"]},{"label":["mean_mpg"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["mean_disp"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["mean_wt"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["mean_qsec"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"4","2":"5.147091","3":"105.1364","4":"2.285727","5":"19.13727"},{"1":"6","2":"4.440690","3":"183.3143","4":"3.117143","5":"17.97714"},{"1":"8","2":"3.872129","3":"353.1000","4":"3.999214","5":"16.77214"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 <div id="plotting-data" class="section level1">
 <h1>Plotting data</h1>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co">#mtDT[,barplot(vs, mean_hp = mean(hp), main=&quot;Average Horsepower&quot;), by = .(carname)]</span></span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co">#mtDT[,barplot(vs, mean_hp = mean(hp), main=&quot;Average Horsepower&quot;), by = .(carname)]</span></span></code></pre></div>
 </div>
 <div id="exercise" class="section level1">
 <h1>Exercise</h1>

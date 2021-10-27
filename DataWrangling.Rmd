@@ -1,5 +1,5 @@
 ---
-title: "Data wrangling at scale with data.table"
+title: "Data Wrangling at Scale with data.table"
 output:
   html_document:
     toc: TRUE
@@ -19,12 +19,11 @@ output:
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 ```
 
----
-# data.table `r emo::ji("video")`
-
-Data.table provides an efficient and high performance alternative of base R's data.frame when conducting data wrangling. 
-
+# What's data wrangling? `r emo::ji("thinking")`
 Data wrangling is the process of converting raw data to another format which can be readily analyzable. 
+
+# data.table `r emo::ji("video")`
+`data.table` provides an efficient and high performance alternative of base R's data.frame when conducting data wrangling. 
 
 `data.table` enables this efficiency by providing: 
 
@@ -35,9 +34,8 @@ Data wrangling is the process of converting raw data to another format which can
 - a large community
 - rich features
 
-It's worth noting that dtplyr allows you to write dplyr code that can be automatically translated to the equivalent data.table code. 
+## Importing with `fread()`
 
-# Importing data with `fread()`.
 Let's download and read the mt dataset using fread.
 ```{r}
 library(data.table)
@@ -59,7 +57,7 @@ trial <- data.frame(matrix(runif(10000000), nrow=1000000))
 #system.time({trial_df <- fread('trial.csv')})
 ```
 
-# Creating data tables
+## Creating data tables
 
 ```{r}
 class(airquality)
@@ -107,7 +105,13 @@ For reference, the mt dataset has the following numeric variables:
 - [,10]	**gear**  - Number of forward gears
 - [,11]	**carb**  - Number of carburetors
 
-# Indexing and Subsetting data tables
+
+# Data manipulation with `data.table` 
+The basic arguments within brackets are NOT row and column numbers but rather "i", "j" and "by". Say you have a data table called DT. In words, DT[i, j, by] translates to "Take DT, subset rows using **i**, then calculate **j** grouped by **by**".
+```{r, fig.align='center', echo=F, out.width = "70%"}
+      knitr::include_graphics("data_table_syntax.png")
+```
+
 Let's compare filtering using conditional statements in a data frame vs. in a data table. In the data table, you only need to pass the column names!
 ```{r}
 mt[mt$cyl == 6 & mt$gear == 4, ]
@@ -161,8 +165,7 @@ mtDT[1, .(mpg, cyl)]
 mtDT[1, c(mpg, cyl)]
 ```
 
-
-# Modifying columns
+# Modifying variables
 ## Dropping columns
 ```{r}
 col <- c('mpg', 'cyl', 'disp')
@@ -177,7 +180,7 @@ setnames(mtDT, 'vs', 'engine_type')
 names(mtDT) # vs renamed to engine_type
 ```
 
-## Creating, assigning, and saving new variables
+## Assigning and saving new variables
 ```{r}
 mtDT[, cyl_gear := cyl + gear]
 
@@ -193,8 +196,6 @@ mtDT
 ```
 
 # Summarizing data
-The basic arguments within brackets are NOT row and column numbers but rather "i", "j" and "by". Say you have a data table called DT. In words, DT[i, j, by] translates to "Take DT, subset rows using **i**, then calculate **j** grouped by **by**".
-
 ```{r, fig.align='center', echo=F, out.width = "90%"}
 #  knitr::include_graphics("")
 ```
@@ -210,12 +211,18 @@ mtDT[,.(mean_hp = mean(hp), sd_hp = sd(hp)), by = engine_type]
 ```
 
 # Chaining
-Like piping using dplyr
+Chaining is like piping in `dplyr`. You only need to attach square brackets at the end to add an additional step in the analysis. For example, we want to return the average mpg, disp, wt, qsec. Then, order the results by cyl.
 ```{r}
 mtDT[, .(mean_mpg=mean(mpg),
-                     mean_disp=mean(disp),
-                     mean_wt=mean(wt),
-                     mean_qsec=mean(qsec)), by=cyl]
+         mean_disp=mean(disp),
+         mean_wt=mean(wt),
+         mean_qsec=mean(qsec)), by=cyl]
+
+
+mtDT[, .(mean_mpg=mean(mpg),
+         mean_disp=mean(disp),
+         mean_wt=mean(wt),
+         mean_qsec=mean(qsec)), by=cyl][order(cyl),]
 ```
 
 # Plotting data
