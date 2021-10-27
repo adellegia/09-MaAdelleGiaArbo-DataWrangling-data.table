@@ -107,9 +107,10 @@ For reference, the mt dataset has the following numeric variables:
 
 
 # Data manipulation with `data.table` 
-The basic arguments within brackets are NOT row and column numbers but rather "i", "j" and "by". Say you have a data table called DT. In words, DT[i, j, by] translates to "Take DT, subset rows using **i**, then calculate **j** grouped by **by**".
+The basic arguments within brackets are **NOT** row and column numbers but rather "i", "j" and "by". Say you have a data table called DT. In other words, DT[i, j, by] translates to "Take DT, subset rows using **i**, then calculate **j** grouped by **by**".
+
 ```{r, fig.align='center', echo=F, out.width = "70%"}
-      knitr::include_graphics("data_table_syntax.png")
+      knitr::include_graphics("pics/data_table_syntax.png")
 ```
 
 Let's compare filtering using conditional statements in a data frame vs. in a data table. In the data table, you only need to pass the column names!

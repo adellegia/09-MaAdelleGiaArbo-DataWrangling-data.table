@@ -334,7 +334,7 @@ div.tocify {
 <p>Data wrangling is the process of converting raw data to another format which can be readily analyzable.</p>
 </div>
 <div id="data.table" class="section level1">
-<h1>data.table 📻</h1>
+<h1>data.table 📸</h1>
 <p><code>data.table</code> provides an efficient and high performance alternative of base R’s data.frame when conducting data wrangling.</p>
 <p><code>data.table</code> enables this efficiency by providing:</p>
 <ul>
@@ -475,7 +475,8 @@ div.tocify {
 </div>
 <div id="data-manipulation-with-data.table" class="section level1">
 <h1>Data manipulation with <code>data.table</code></h1>
-<p>The basic arguments within brackets are NOT row and column numbers but rather “i”, “j” and “by”. Say you have a data table called DT. In words, DT[i, j, by] translates to “Take DT, subset rows using <strong>i</strong>, then calculate <strong>j</strong> grouped by <strong>by</strong>”. <img src="data_table_syntax.png" width="70%" style="display: block; margin: auto;" /></p>
+<p>The basic arguments within brackets are <strong>NOT</strong> row and column numbers but rather “i”, “j” and “by”. Say you have a data table called DT. In other words, DT[i, j, by] translates to “Take DT, subset rows using <strong>i</strong>, then calculate <strong>j</strong> grouped by <strong>by</strong>”.</p>
+<p><img src="pics/data_table_syntax.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Let’s compare filtering using conditional statements in a data frame vs. in a data table. In the data table, you only need to pass the column names!</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>mt[mt<span class="sc">$</span>cyl <span class="sc">==</span> <span class="dv">6</span> <span class="sc">&amp;</span> mt<span class="sc">$</span>gear <span class="sc">==</span> <span class="dv">4</span>, ]</span></code></pre></div>
 <div data-pagedtable="false">
