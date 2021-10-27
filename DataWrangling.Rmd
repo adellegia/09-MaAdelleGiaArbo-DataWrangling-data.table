@@ -46,21 +46,25 @@ Data wrangling is the process of converting raw data to another format which can
 
 ## Importing with `fread()`
 
-Data.table's efficiency begins from the outset with `fread()`, which is short for fast read is data.table's version of `read_csv()`.
+`data.table`'s efficiency begins from the outset with `fread()`, which is short for fast read is data.table's version of `read_csv()`.
 
-Let's download and read the mt dataset using fread.
+Let's download and read the `mtcars` dataset and call it `mt` using `fread()`.
 ```{r}
+library(dplyr)
 library(data.table)
 mt <- fread("https://raw.githubusercontent.com/selva86/datasets/master/mtcars.csv")
 ```
 
-We can then see that `fread()` is at least 20 times faster! Let's check it out!
+Let's check how fast `fread()` actually is it compared to `read.csv`.
 ```{r}
 # Create a large .csv file
 set.seed(28)
 trial <- data.frame(matrix(runif(10000000), nrow=1000000))
 #write.csv(trial, 'trial.csv', row.names = F)
+```
 
+We can then see that `fread()` is at least 20 times faster! Let's check it out!
+```{r}
 # Time taken by read.csv to import
 #system.time({trial_df <- read.csv('trial.csv')})
 
@@ -69,28 +73,31 @@ trial <- data.frame(matrix(runif(10000000), nrow=1000000))
 ```
 
 ## Creating data tables
-
-To highlight what a data table is, we will create data tables in a multitude of methods and compare the results with a data frame. 
-
+To highlight what a data table is, we will create data tables using different functions and compare the results with a data frame. Let's use a built-in R data called `airquality`.
 ```{r}
+head(airquality)
 class(airquality)
 ```
-To convert a data frame to a data table, we can either use:
+To convert this data frame to a data table, we can either use:
 
 * `data.table()` and `as.data.table()` - This function creates a copy of the data and converts it to a data.table
 
 * `setDT()` - This function converts the data to a data.table, there is then no need to assign to a new object
 
-We use the built-in R data set airquality as an example.
+We convert `airquality` data frame to a data table using `as.data.table`. It then becomes both a data table and a data frame.
 ```{r}
 class(airquality)
 airqualityDT <- as.data.table(airquality)
 class(airqualityDT)
-
-mtDT <- as.data.table(mt)
 ```
 
-We can also use `data.table()` to create data tables.
+Now, we do the same for the mt data frame.
+```{r}
+mtDT <- as.data.table(mt)
+class(mtDT)
+```
+
+We can "manually" create a data table using `data.table()`.
 ```{r}
 DT <- data.table(x = 1:8,
                  y = round(pi*1:8,2),
@@ -104,8 +111,8 @@ names(mtDT)
 dim(mtDT)
 str(mtDT)
 ```
-For reference, the mt dataset has the following numeric variables:
 
+For reference, the mt dataset has the following numeric variables:
 - [, 1]	**mpg**   - Miles/(US) gallon
 - [, 2]	**cyl**   - Number of cylinders
 - [, 3]	**disp**  - Displacement (cu.in.)
@@ -122,14 +129,13 @@ For reference, the mt dataset has the following numeric variables:
 # Data manipulation with `data.table` 
 When compared to a data frame, the basic arguments within brackets are **NOT** row and column numbers but rather "i", "j" and "by". 
 
-For a data table named DT, DT[i, j, by] translates to "Take DT, subset rows using **i**, then calculate **j** grouped by **by**".
+For example, a data table named DT, DT[i, j, by] translates to "Take DT, subset rows using **i**, then calculate **j** grouped by **by**".
 
 ```{r, fig.align='center', echo=F, out.width = "70%"}
       knitr::include_graphics("pics/data_table_syntax.png")
 ```
 
 Let's compare filtering using conditional statements in a data frame vs. in a data table. 
-
 You will notice one of the primary benefits of data table, that you only need to pass the column names!
 ```{r}
 mt[mt$cyl == 6 & mt$gear == 4, ]
@@ -139,7 +145,6 @@ mtDT[cyl==6 & gear==4, ]
 ```
 
 ## Filtering rows
-
 Selecting rows is largely similar to data frame.
 
 ```{r}
@@ -148,48 +153,53 @@ mtDT[1,]
 
 # selecting first five rows
 mtDT[1:5,]
-```
 
-## Selecting columns
-
-Selecting columns is easier with data table as there is no requirement to insert the initial comma. 
-
-```{r}
 # no need to put comma in selecting rows
 mtDT[1:2]
 
-# selecting columns
+# subsetting using conditional statements
+mtDT[cyl < 5 & am == 0]
+```
+
+## Selecting columns
+There are some pointers you have to remember to select  a column.
+```{r}
+# using index
 mtDT[,1:2]
 
-# no need to put "mtDT$" when calling a variable or column
-mtDT[,list(mpg, cyl)]
+# using column name
+mtDT[ , mpg] # returns a vector
+mtDT[ , "mpg"] # returns the column
+
+# selecting multiple columns using "list" or puting inside ".()"
+mtDT[, list(mpg, cyl)]
 mtDT[, .(mpg, cyl)]
 
 # selecting multiple columns using a character vector
 col <- c('mpg', 'cyl', 'disp')
 
-# returns an error
-#mtDT[, col] 
+#mtDT[, col] # returns an error
 
+# need to put, with = FALSE, or add ".." before the character vector
 mtDT[, col, with = FALSE]
 mtDT[, ..col]
 ```
+
 ## Subsetting rows and columns
-
-The remaining examples shows the multitude of functions on how you can call specific values and vectors. 
-
+Combing what we learned above, we can filter rows and select columns together from a data table.
 ```{r}
 # selecting first row, second column
-mtDT[1,2]
+mtDT[1,2] # returns the column
 
-mtDT[1,cyl]
+mtDT[1,cyl] # returns a vector
 
-mtDT[1,list(mpg, cyl)]
+mtDT[1,"cyl"] # returns the column
 
-mtDT[1, .(mpg, cyl)]
+mtDT[1,list(mpg, cyl)] # returns the column
 
-# returns a vector
-mtDT[1, c(mpg, cyl)]
+mtDT[1, .(mpg, cyl)] # returns the column
+
+mtDT[1, c(mpg, cyl)] # returns a vector
 ```
 
 # Modifying variables
@@ -205,7 +215,7 @@ Data.table also makes it easy to:
 col <- c('mpg', 'cyl', 'disp')
 
 mtDT[, !col, with = FALSE]
-mtDT[, !..col, with = FALSE]
+mtDT[, !..col, with = FALSE] # note: you need to assign this to a new object to make a new data table excluding the dropped variables
 ```
 
 ## Renaming columns using `setnames()`
@@ -215,6 +225,7 @@ names(mtDT) # vs renamed to engine_type
 ```
 
 ## Assigning and saving new variables
+To create a new column, we use this symbol `:=` to assign the new variable.
 ```{r}
 mtDT[, cyl_gear := cyl + gear]
 
@@ -222,22 +233,24 @@ mtDT[, cyl_gear] # returns a vector
 mtDT[, "cyl_gear"] # returns the column
 ```
 
-To create multiple columns,
+We can also create multiple columns like using `mutate()` in `dplyr`. In  `data.table`, we only need to put back single quotes to `:=` and assign new variables.
 ```{r}
-mtDT[,  `:=`(cyl_gear3 = cyl * gear,
-                  cyl_gear4 = cyl - gear)]
-mtDT
+mtDT[,  `:=`(cyl_gear2 = cyl * gear,
+             cyl_gear3 = cyl - gear)]
+names(mtDT)
+head(mtDT[, list(cyl_gear2, cyl_gear3)])
 ```
 
 # Summarizing data
-```{r, fig.align='center', echo=F, out.width = "90%"}
-#  knitr::include_graphics("")
-```
-
-Summarising data is more readable and easier to type as it takes fewer key strokes. 
+Summarising data is more readable and easier to type as it takes fewer key strokes compared to `dplyr`. 
 
 ```{r}
-mtDT[,.(mean_hp = mean(hp), sd_hp = sd(hp))]
+mtDT[,(mean_hp = mean(hp))] # returns a vector
+
+# Notice what happens using "."
+mtDT[,.(mean_hp = mean(hp))] # returns name
+
+mtDT[,.(mean_hp = mean(hp), sd_hp = sd(hp))] # without the "." at the beggining, you will get an error
 
 mtDT[,.(mean_hp = mean(hp), sd_hp = sd(hp)), by = .(engine_type)]
 
@@ -262,17 +275,72 @@ mtDT[, .(mean_mpg=mean(mpg),
          mean_qsec=mean(qsec)), by=cyl][order(cyl),]
 ```
 
-# Plotting data
-
-
+Recall that the `dplyr` piping version of this is:
 ```{r}
-#mtDT[,barplot(vs, mean_hp = mean(hp), main="Average Horsepower"), by = .(carname)]
+mtDT %>%
+  group_by(cyl) %>%
+  summarise(mean_mpg=mean(mpg),
+         mean_disp=mean(disp),
+         mean_wt=mean(wt),
+         mean_qsec=mean(qsec)) %>%
+  arrange(cyl)
 ```
 
+# Joins with `data.table`
+## Key
+The concept of a "key" is useful in data tables, especially in merging data. We can set a column as a key using `setkey()`.
+```{r}
+setkey(mtDT, carname) # setting carname as key
+setkey(mtDT, carname, cyl) # setting multiple keys
+```
+
+Remember the chaining example a while ago. We grouped and ordered by `cyl`. Let's re-do that using a shortcut by using `keyby`.
+```{r}
+# instead of using this chain
+mtDT[, .(mean_mpg=mean(mpg),
+         mean_disp=mean(disp),
+         mean_wt=mean(wt),
+         mean_qsec=mean(qsec)), by=cyl][order(cyl), ]
+
+# use keyby to group and order by cyl
+mtDT[, .(mean_mpg=mean(mpg),
+         mean_disp=mean(disp),
+         mean_wt=mean(wt),
+         mean_qsec=mean(qsec)), keyby=cyl]
+key(mtDT)
+
+setkey(mtDT, NULL) # to remove the key
+```
+
+## Joining data tables
+Now that we know what a key is, we can use this concept to merge or join two data tables.
+```{r}
+setkey(mtDT, carname)
+
+# we subset 3 data tables with 10 rows
+dt1 <- mtDT[5:25,.(carname, mpg, cyl)]
+dt2 <- mtDT[1:10, .(carname, gear)]
+dt3 <- mtDT[2:12, .(carname, disp)]
+
+# Inner Join
+merge(dt1, dt2, by='carname') # returns 6 rows from row 5 to 10
+
+# Left Join
+merge(dt1, dt2, by='carname', all.x = T) # returns 21 rows using dt1 as the base
+
+# Outer Join
+merge(dt1, dt2, by='carname', all = T)  # returns 25 rows
+```
+
+# Plotting data
+```{r}
+mtDT[,plot(mpg, drat, main="mpg vs. drat")]
+```
 
 # Exercise
 dplyr vs. data.table
 ```{r}
+
 ```
 
 # Sources {-}
