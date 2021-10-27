@@ -25,7 +25,7 @@ This presentation will detail data.tables data wrangling functionality, includin
 - Summarizing data
 - Chaining
 - Joins 
-- Plotting data.
+- Plotting data
 
 We will end the presentation with an exercise. 
 
@@ -42,12 +42,12 @@ Data wrangling is the process of converting raw data to another format which can
 
 `data.table` enables this efficiency by providing: 
 
-- concise syntax: fast to type, fast to read;
-- fast speed;
-- memory efficiency;
-- careful API lifecycle management;
-- a large community; and
-- rich features.
+- concise syntax: fast to type, fast to read
+- fast speed
+- memory efficiency
+- careful API lifecycle management
+- a large community
+- rich features
 
 ## Importing with `fread()`
 
@@ -60,7 +60,7 @@ library(data.table)
 mt <- as.data.frame(fread("mtcars.csv"))
 ```
 
-Let's check how fast `fread()` actually is it compared to `read.csv`.
+Let's check how fast `fread()` actually is it compared to `read.csv`. You can also write a file using `fwrite()` in `data.table` like `write.csv`. 
 ```{r}
 # Create a large .csv file
 set.seed(28)
@@ -122,7 +122,7 @@ dim(mtDT)
 str(mtDT)
 ```
 
-For reference, the mt dataset has the following variables:
+For reference, the `mt` data has the following variables:
 
 - [, 1]	**carname**   - Car name
 - [, 2]	**mpg**   - Miles/(US) gallon
@@ -138,7 +138,7 @@ For reference, the mt dataset has the following variables:
 - [,12]	**carb**  - Number of carburetors
 
 
-# Data manipulation with `data.table` 
+# Data manipulation with `data.table` `r emo::ji("car")`
 When compared to a data frame, the basic arguments within brackets are **NOT** row and column numbers but rather "i", "j" and "by". 
 
 For example, a data table named DT, DT[i, j, by] translates to "Take DT, subset rows using **i**, then calculate **j** grouped by **by**".
@@ -214,7 +214,7 @@ mtDT[1, .(mpg, cyl)] # returns the column
 mtDT[1, c(mpg, cyl)] # returns a vector
 ```
 
-# Modifying variables
+# Modifying variables `r emo::ji("key")`
 
 Data.table also makes it easy to:
 
@@ -253,7 +253,7 @@ names(mtDT)
 head(mtDT[, list(cyl_gear2, cyl_gear3)])
 ```
 
-# Summarizing data
+# Summarizing data `r emo::ji("desktop")`
 Summarising data is more readable and easier to type as it takes fewer key strokes compared to `dplyr`. 
 
 ```{r}
@@ -270,7 +270,7 @@ mtDT[,.(mean_hp = mean(hp), sd_hp = sd(hp)), by = .(engine_type)]
 mtDT[,.(mean_hp = mean(hp), sd_hp = sd(hp)), by = engine_type]
 ```
 
-# Chaining
+# Chaining `r emo::ji("cell")`
 Chaining is like piping in `dplyr`. You only need to attach square brackets at the end, with your method, to add an additional step in the analysis. 
 
 For example, we want to return the average mpg, disp, wt, qsec. Then, order the results by cyl.
@@ -298,7 +298,7 @@ mtDT %>%
   arrange(cyl)
 ```
 
-# Joins with `data.table`
+# Joins with `data.table` `r emo::ji("family")`
 ## Key
 The concept of a "key" is useful in data tables, especially in merging data. We can set a column as a key using `setkey()`.
 ```{r}
@@ -344,21 +344,27 @@ merge(dt1, dt2, by='carname', all.x = T) # returns 21 rows using dt1 as the base
 merge(dt1, dt2, by='carname', all = T)  # returns 25 rows
 ```
 
-# Plotting data
+# Plotting data `r emo::ji("chart")`
 ```{r}
 mtDT[,plot(mpg, drat, main="mpg vs. drat")]
 ```
 
-# Exercise
-dplyr vs. data.table
+# Further readings `r emo::ji("student")`
+`data.table` has many other functions including:
+
+- `dcast` - pivot/wider/spread
+- `melt()` - unpivot/longer/gather
+- `.SD` and `.SDcols`
+
+# Exercise `r emo::ji("sun")`
+Using `data.table` and the `mtcars.csv` data.
 ```{r}
-# to add
 
 ```
 
-# Sources {-}
+# Sources `r emo::ji("teacher")`
 
-This tutorial is partly based on [data.table in R – The Complete Beginners Guide](https://www.machinelearningplus.com/data-manipulation/datatable-in-r-complete-guide/) by Selva Prabhakaran.
+This tutorial is partly based on [data.table in R – The Complete Beginners Guide](https://www.machinelearningplus.com/data-manipulation/datatable-in-r-complete-guide/) by Selva Prabhakaran and [Data Wrangling — Raw to Clean Transformation](https://towardsdatascience.com/data-wrangling-raw-to-clean-transformation-b30a27bf4b3b) by Suraj Gurav.
 
 
 

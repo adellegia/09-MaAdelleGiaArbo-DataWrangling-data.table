@@ -336,7 +336,7 @@ div.tocify {
 <li>Summarizing data</li>
 <li>Chaining</li>
 <li>Joins</li>
-<li>Plotting data.</li>
+<li>Plotting data</li>
 </ul>
 <p>We will end the presentation with an exercise.</p>
 <div id="whats-data-wrangling" class="section level1">
@@ -345,16 +345,16 @@ div.tocify {
 <p><img src="pics/data_wrangling.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="data.table" class="section level1">
-<h1>data.table 📻</h1>
+<h1>data.table 📺</h1>
 <p><code>data.table</code> provides an efficient and high performance alternative of base R’s data.frame when conducting data wrangling.</p>
 <p><code>data.table</code> enables this efficiency by providing:</p>
 <ul>
-<li>concise syntax: fast to type, fast to read;</li>
-<li>fast speed;</li>
-<li>memory efficiency;</li>
-<li>careful API lifecycle management;</li>
-<li>a large community; and</li>
-<li>rich features.</li>
+<li>concise syntax: fast to type, fast to read</li>
+<li>fast speed</li>
+<li>memory efficiency</li>
+<li>careful API lifecycle management</li>
+<li>a large community</li>
+<li>rich features</li>
 </ul>
 <div id="importing-with-fread" class="section level2">
 <h2>Importing with <code>fread()</code></h2>
@@ -363,7 +363,7 @@ div.tocify {
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>mt <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">fread</span>(<span class="st">&quot;mtcars.csv&quot;</span>))</span></code></pre></div>
-<p>Let’s check how fast <code>fread()</code> actually is it compared to <code>read.csv</code>.</p>
+<p>Let’s check how fast <code>fread()</code> actually is it compared to <code>read.csv</code>. You can also write a file using <code>fwrite()</code> in <code>data.table</code> like <code>write.csv</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a large .csv file</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">28</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>trial <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">matrix</span>(<span class="fu">runif</span>(<span class="dv">10000000</span>), <span class="at">nrow=</span><span class="dv">1000000</span>))</span>
@@ -484,7 +484,7 @@ div.tocify {
 ##  $ gear   : int  4 4 4 3 3 3 3 4 4 4 ...
 ##  $ carb   : int  4 4 1 1 2 1 4 2 2 4 ...
 ##  - attr(*, &quot;.internal.selfref&quot;)=&lt;externalptr&gt;</code></pre>
-<p>For reference, the mt dataset has the following variables:</p>
+<p>For reference, the <code>mt</code> data has the following variables:</p>
 <ul>
 <li>[, 1] <strong>carname</strong> - Car name</li>
 <li>[, 2] <strong>mpg</strong> - Miles/(US) gallon</li>
@@ -502,7 +502,7 @@ div.tocify {
 </div>
 </div>
 <div id="data-manipulation-with-data.table" class="section level1">
-<h1>Data manipulation with <code>data.table</code></h1>
+<h1>Data manipulation with <code>data.table</code> 🚗</h1>
 <p>When compared to a data frame, the basic arguments within brackets are <strong>NOT</strong> row and column numbers but rather “i”, “j” and “by”.</p>
 <p>For example, a data table named DT, DT[i, j, by] translates to “Take DT, subset rows using <strong>i</strong>, then calculate <strong>j</strong> grouped by <strong>by</strong>”.</p>
 <p><img src="pics/data_table_syntax.png" width="70%" style="display: block; margin: auto;" /></p>
@@ -641,7 +641,7 @@ div.tocify {
 </div>
 </div>
 <div id="modifying-variables" class="section level1">
-<h1>Modifying variables</h1>
+<h1>Modifying variables 🔑</h1>
 <p>Data.table also makes it easy to:</p>
 <ul>
 <li>Drop columns;</li>
@@ -703,7 +703,7 @@ div.tocify {
 </div>
 </div>
 <div id="summarizing-data" class="section level1">
-<h1>Summarizing data</h1>
+<h1>Summarizing data 💻</h1>
 <p>Summarising data is more readable and easier to type as it takes fewer key strokes compared to <code>dplyr</code>.</p>
 <div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>mtDT[,(<span class="at">mean_hp =</span> <span class="fu">mean</span>(hp))] <span class="co"># returns a vector</span></span></code></pre></div>
 <pre><code>## [1] 146.6875</code></pre>
@@ -735,7 +735,7 @@ div.tocify {
 </div>
 </div>
 <div id="chaining" class="section level1">
-<h1>Chaining</h1>
+<h1>Chaining 📱</h1>
 <p>Chaining is like piping in <code>dplyr</code>. You only need to attach square brackets at the end, with your method, to add an additional step in the analysis.</p>
 <p>For example, we want to return the average mpg, disp, wt, qsec. Then, order the results by cyl.</p>
 <div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>mtDT[, .(<span class="at">mean_mpg=</span><span class="fu">mean</span>(mpg),</span>
@@ -771,7 +771,7 @@ div.tocify {
 </div>
 </div>
 <div id="joins-with-data.table" class="section level1">
-<h1>Joins with <code>data.table</code></h1>
+<h1>Joins with <code>data.table</code> 👪</h1>
 <div id="key" class="section level2">
 <h2>Key</h2>
 <p>The concept of a “key” is useful in data tables, especially in merging data. We can set a column as a key using <code>setkey()</code>.</p>
@@ -836,19 +836,27 @@ div.tocify {
 </div>
 </div>
 <div id="plotting-data" class="section level1">
-<h1>Plotting data</h1>
+<h1>Plotting data 💹</h1>
 <div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>mtDT[,<span class="fu">plot</span>(mpg, drat, <span class="at">main=</span><span class="st">&quot;mpg vs. drat&quot;</span>)]</span></code></pre></div>
 <p><img src="DataWrangling_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
 <pre><code>## NULL</code></pre>
 </div>
-<div id="exercise" class="section level1">
-<h1>Exercise</h1>
-<p>dplyr vs. data.table</p>
-<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="co"># to add</span></span></code></pre></div>
+<div id="further-readings" class="section level1">
+<h1>Further readings 👨‍🎓</h1>
+<p><code>data.table</code> has many other functions including:</p>
+<ul>
+<li><code>dcast</code> - pivot/wider/spread</li>
+<li><code>melt()</code> - unpivot/longer/gather</li>
+<li><code>.SD</code> and <code>.SDcols</code></li>
+</ul>
 </div>
-<div id="sources" class="section level1 unnumbered">
-<h1 class="unnumbered">Sources</h1>
-<p>This tutorial is partly based on <a href="https://www.machinelearningplus.com/data-manipulation/datatable-in-r-complete-guide/">data.table in R – The Complete Beginners Guide</a> by Selva Prabhakaran.</p>
+<div id="exercise" class="section level1">
+<h1>Exercise ☀️</h1>
+<p>Using <code>data.table</code> and the <code>mtcars.csv</code> data.</p>
+</div>
+<div id="sources" class="section level1">
+<h1>Sources 👨‍🏫</h1>
+<p>This tutorial is partly based on <a href="https://www.machinelearningplus.com/data-manipulation/datatable-in-r-complete-guide/">data.table in R – The Complete Beginners Guide</a> by Selva Prabhakaran and <a href="https://towardsdatascience.com/data-wrangling-raw-to-clean-transformation-b30a27bf4b3b">Data Wrangling — Raw to Clean Transformation</a> by Suraj Gurav.</p>
 </div>
 
 &nbsp;
