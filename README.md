@@ -7,7 +7,7 @@ This repository provides materials for a session that is part of the [Data wrang
 
 ### Session contents
 
-This session will introduce you to the modern data wrangling workflow with data.table. Data wrangling is one of the core steps in the data science workflow, specifically when cleaning raw dets sets into a format that is readily analyzable. dplyr is a grammar of data manipulation, providing a consistent set of verbs that help you solve the most common data manipulation challenges, including the manipulation of datasets and variables. 
+This session will introduce you to the modern data wrangling workflow with data.table. Data wrangling is one of the core steps in the data science workflow, specifically when cleaning raw deta sets into a format that is readily analyzable. Data.table is a grammar of data manipulation, providing a consistent set of verbs that help you solve the most common data manipulation challenges, including the manipulation of datasets and variables. 
 
 ### Main learning objectives
 
