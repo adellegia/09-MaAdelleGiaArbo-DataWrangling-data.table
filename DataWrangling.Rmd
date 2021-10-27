@@ -92,8 +92,13 @@ airqualityDT <- as.data.table(airquality)
 class(airqualityDT)
 ```
 
-Now, we do the same for the mt data frame.
+Now, we do the same for the `mt` data frame.
 ```{r}
+class(mt)
+setDT(mt) # we do not need to assign mt to a new object
+class(mt)
+
+# for illustration purposes, let's use `as.data.table` and assign it to mtDT
 mtDT <- as.data.table(mt)
 class(mtDT)
 ```
@@ -343,6 +348,7 @@ mtDT[,plot(mpg, drat, main="mpg vs. drat")]
 # Exercise
 dplyr vs. data.table
 ```{r}
+# to add
 
 ```
 
