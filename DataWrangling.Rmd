@@ -33,6 +33,10 @@ We will end the presentation with an exercise.
 # What's data wrangling? `r emo::ji("thinking")`
 Data wrangling is the process of converting raw data to another format which can be readily analyzable. 
 
+```{r, fig.align='center', echo=F, out.width = "70%"}
+      knitr::include_graphics("pics/data_wrangling.png")
+```
+
 # data.table `r emo::ji("video")`
 `data.table` provides an efficient and high performance alternative of base R's data.frame when conducting data wrangling. 
 
@@ -111,7 +115,7 @@ DT <- data.table(x = 1:8,
 knitr::kable(DT)
 ```
 
-Packages and functions that work with data frames also work for data tables.
+Packages and functions that work with data frames also work for data tables. Since a data.table is a data.frame, it is compatible with R functions and packages that accept only data.frames.
 ```{r}
 names(mtDT)
 dim(mtDT)
