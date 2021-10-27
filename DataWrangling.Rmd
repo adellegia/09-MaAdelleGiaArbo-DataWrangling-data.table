@@ -236,3 +236,10 @@ mtDT[, .(mean_mpg=mean(mpg),
 dplyr vs. data.table
 ```{r}
 ```
+
+# Sources {-}
+
+This tutorial is partly based on [data.table in R – The Complete Beginners Guide](https://www.machinelearningplus.com/data-manipulation/datatable-in-r-complete-guide/) by Selva Prabhakaran.
+
+
+
