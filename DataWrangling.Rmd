@@ -148,7 +148,7 @@ mtDT[, .(mpg, cyl)]
 col <- c('mpg', 'cyl', 'disp')
 
 # returns an error
-# mtDT[, col] 
+mtDT[, col] 
 
 mtDT[, col, with = FALSE]
 mtDT[, ..col]
@@ -202,6 +202,12 @@ mtDT
 
 # Summarizing data
 The basic arguments within brackets are NOT row and column numbers but rather "i", "j" and "by". Say you have a data table called DT. In words, DT[i, j, by] translates to "Take DT, subset rows using **i**, then calculate **j** grouped by **by**".
+
+```{r, fig.align='center', echo=F, out.width = "90%"}
+#  knitr::include_graphics("")
+```
+
+
 ```{r}
 mtDT[,.(mean_hp = mean(hp), sd_hp = sd(hp))]
 
