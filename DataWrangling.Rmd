@@ -31,12 +31,13 @@ Data.table provides an efficient and high performance alternative of base R's da
 Data wrangling is the process of converting raw data to another format which can be readily analyzable. 
 
 `data.table` enables this efficiency by providing: 
-  * concise syntax: fast to type, fast to read
-  * fast spee
-  * memory efficiency
-  * careful API lifecycle management
-  * a large community
-  * rich features
+
+- concise syntax: fast to type, fast to read
+- fast spee
+- memory efficiency
+- careful API lifecycle management
+- a large community
+- rich features
 
 It's worth noting that dtplyr allows you to write dplyr code that can be automatically translated to the equivalent data.table code. 
 
