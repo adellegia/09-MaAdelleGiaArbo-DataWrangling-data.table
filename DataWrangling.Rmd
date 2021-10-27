@@ -1,6 +1,6 @@
 ---
 title: "Data wrangling at scale with data.table"
-output: 
+output:
   html_document:
     toc: TRUE
     df_print: paged
@@ -13,6 +13,11 @@ output:
     self_contained: false
     includes:
       after_body: footer.html
+#output: 
+#  ioslides_presentation:
+#    widescreen: true
+#    smaller: true
+#output: slidy_presentation
 ---
 
 ```{r setup, include=FALSE}
@@ -21,7 +26,19 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 ---
 # data.table `r emo::ji("video")`
 
-Add intro*
+Data.table provides an efficient and high performance alternative of base R's data.frame when conducting data wrangling. 
+
+Data wrangling is the process of converting raw data to another format which can be readily analyzable. 
+
+`data.table` enables this efficiency by providing: 
+  * concise syntax: fast to type, fast to read
+  * fast spee
+  * memory efficiency
+  * careful API lifecycle management
+  * a large community
+  * rich features
+
+It's worth noting that dtplyr allows you to write dplyr code that can be automatically translated to the equivalent data.table code. 
 
 
 # Importing data with `fread()`
@@ -197,7 +214,10 @@ mtDT[,.(mean_hp = mean(hp), sd_hp = sd(hp)), by = engine_type]
 # Chaining
 Like piping using dplyr
 ```{r}
-
+mtDT[, .(mean_mpg=mean(mpg),
+                     mean_disp=mean(disp),
+                     mean_wt=mean(wt),
+                     mean_qsec=mean(qsec)), by=cyl]
 ```
 
 # Plotting data
