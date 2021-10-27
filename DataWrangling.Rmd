@@ -20,13 +20,14 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 ```
 This presentation will detail data.tables data wrangling functionality, including:
 
-- Data manipulation;
-- Modifying variables;
-- Summarizing data;
+- Data manipulation
+- Modifying variables
+- Summarizing data
 - Chaining
+- Joins 
 - Plotting data.
 
-We will then end with a class exercise. 
+We will end the presentation with an exercise. 
 
 
 # What's data wrangling? `r emo::ji("thinking")`
@@ -137,7 +138,7 @@ For example, a data table named DT, DT[i, j, by] translates to "Take DT, subset 
 ```
 
 Let's compare filtering using conditional statements in a data frame vs. in a data table. 
-You will notice one of the primary benefits of data table, that you only need to pass the column names!
+You will notice one of the primary benefits of data table, you only need to pass the column names!
 ```{r}
 mt[mt$cyl == 6 & mt$gear == 4, ]
 
