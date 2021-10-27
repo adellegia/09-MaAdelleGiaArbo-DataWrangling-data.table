@@ -113,6 +113,7 @@ str(mtDT)
 ```
 
 For reference, the mt dataset has the following numeric variables:
+
 - [, 1]	**mpg**   - Miles/(US) gallon
 - [, 2]	**cyl**   - Number of cylinders
 - [, 3]	**disp**  - Displacement (cu.in.)
