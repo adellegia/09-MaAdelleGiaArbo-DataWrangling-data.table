@@ -53,7 +53,7 @@ Let's download and read the `mtcars` dataset and call it `mt` using `fread()`.
 ```{r}
 library(dplyr)
 library(data.table)
-mt <- fread("https://raw.githubusercontent.com/selva86/datasets/master/mtcars.csv")
+mt <- as.data.frame(fread("mtcars.csv"))
 ```
 
 Let's check how fast `fread()` actually is it compared to `read.csv`.
@@ -113,19 +113,20 @@ dim(mtDT)
 str(mtDT)
 ```
 
-For reference, the mt dataset has the following numeric variables:
+For reference, the mt dataset has the following variables:
 
-- [, 1]	**mpg**   - Miles/(US) gallon
-- [, 2]	**cyl**   - Number of cylinders
-- [, 3]	**disp**  - Displacement (cu.in.)
-- [, 4]	**hp**    - Gross horsepower
-- [, 5]	**drat**  - Rear axle ratio
-- [, 6]	**wt**    - Weight (1000 lbs)
-- [, 7]	**qsec**  - 1/4 mile time
-- [, 8]	**vs**    - Engine (0 = V-shaped, 1 = straight)
-- [, 9]	**am**    - Transmission (0 = automatic, 1 = manual)
-- [,10]	**gear**  - Number of forward gears
-- [,11]	**carb**  - Number of carburetors
+- [, 1]	**carname**   - Car name
+- [, 2]	**mpg**   - Miles/(US) gallon
+- [, 3]	**cyl**   - Number of cylinders
+- [, 4]	**disp**  - Displacement (cu.in.)
+- [, 5]	**hp**    - Gross horsepower
+- [, 6]	**drat**  - Rear axle ratio
+- [, 7]	**wt**    - Weight (1000 lbs)
+- [, 8]	**qsec**  - 1/4 mile time
+- [, 9]	**vs**    - Engine (0 = V-shaped, 1 = straight)
+- [,10]	**am**    - Transmission (0 = automatic, 1 = manual)
+- [,11]	**gear**  - Number of forward gears
+- [,12]	**carb**  - Number of carburetors
 
 
 # Data manipulation with `data.table` 
