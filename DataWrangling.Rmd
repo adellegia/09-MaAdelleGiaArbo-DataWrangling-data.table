@@ -13,16 +13,12 @@ output:
     self_contained: false
     includes:
       after_body: footer.html
-#output: 
-#  ioslides_presentation:
-#    widescreen: true
-#    smaller: true
-#output: slidy_presentation
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 ```
+
 ---
 # data.table `r emo::ji("video")`
 
@@ -41,14 +37,10 @@ Data wrangling is the process of converting raw data to another format which can
 
 It's worth noting that dtplyr allows you to write dplyr code that can be automatically translated to the equivalent data.table code. 
 
-
-# Importing data with `fread()`
-```{r}
-library(data.table)
-```
-
+# Importing data with `fread()`.
 Let's download and read the mt dataset using fread.
 ```{r}
+library(data.table)
 mt <- fread("https://raw.githubusercontent.com/selva86/datasets/master/mtcars.csv")
 ```
 
@@ -149,7 +141,7 @@ mtDT[, .(mpg, cyl)]
 col <- c('mpg', 'cyl', 'disp')
 
 # returns an error
-mtDT[, col] 
+#mtDT[, col] 
 
 mtDT[, col, with = FALSE]
 mtDT[, ..col]
@@ -184,7 +176,6 @@ mtDT[, !..col, with = FALSE]
 setnames(mtDT, 'vs', 'engine_type')
 names(mtDT) # vs renamed to engine_type
 ```
-
 
 ## Creating, assigning, and saving new variables
 ```{r}
