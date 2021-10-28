@@ -345,7 +345,7 @@ div.tocify {
 <p><img src="pics/data_wrangling.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="data.table" class="section level1">
-<h1>data.table 📸</h1>
+<h1>data.table 📽</h1>
 <p><code>data.table</code> provides an efficient and high performance alternative of base R’s data.frame when conducting data wrangling.</p>
 <p><code>data.table</code> enables this efficiency by providing:</p>
 <ul>
@@ -845,14 +845,30 @@ div.tocify {
 <h1>Further readings 👨‍🎓</h1>
 <p><code>data.table</code> has many other functions including:</p>
 <ul>
-<li><code>dcast</code> - pivot/wider/spread</li>
+<li><code>dcast()</code> - pivot/wider/spread</li>
 <li><code>melt()</code> - unpivot/longer/gather</li>
 <li><code>.SD</code> and <code>.SDcols</code></li>
 </ul>
 </div>
 <div id="exercise" class="section level1">
 <h1>Exercise ☀️</h1>
-<p>Using <code>data.table</code> and the <code>mtcars.csv</code> data.</p>
+<p>Using <code>data.table</code> and the <code>mtcars.csv</code> data, please complete the following exercises.</p>
+<ol style="list-style-type: upper-alpha">
+<li>Please create a new column(variable) called ‘mileage_type’ that has the value ‘high’ if mpg &gt; 30. If mpg &lt; 30, then the value should be ‘low’.</li>
+</ol>
+<p><br></p>
+<ol start="2" style="list-style-type: upper-alpha">
+<li>Please import the <code>mtcars_fun</code> dataset as a data table. Please name this data table `mt_fun’.</li>
+</ol>
+<p><br></p>
+<ol start="3" style="list-style-type: upper-alpha">
+<li>Please inner join the ‘mtcars_fun’ and ‘mt’ data tables as a new data table called ‘mt_merge’.</li>
+</ol>
+<p><br></p>
+<ol start="4" style="list-style-type: upper-alpha">
+<li>Please convert the mpg variable into kilometres per litre. The formula for conversion is 1 mpg = 2.352 lkm.</li>
+</ol>
+<p><br></p>
 </div>
 <div id="sources" class="section level1">
 <h1>Sources 👨‍🏫</h1>

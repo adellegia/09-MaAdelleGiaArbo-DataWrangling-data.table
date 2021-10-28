@@ -356,11 +356,45 @@ mtDT[,plot(mpg, drat, main="mpg vs. drat")]
 - `.SD` and `.SDcols`
 
 # Exercise `r emo::ji("sun")`
-Using `data.table` and the `mtcars.csv` data.
+
+Using `data.table` and the `mtcars.csv` data, please complete the following exercises.
+
+A) Please create a new column(variable) called ‘mileage_type’ that has the value ‘high’ if mpg > 30. If mpg < 30, then the value should be 'low'. 
+
 ```{r}
 
 
 ```
+
+<br>
+
+B) Please import the `mtcars_fun` dataset as a data table. Please name this data table `mt_fun'.
+ 
+
+```{r}
+
+```
+
+<br> 
+
+C) Please inner join the 'mtcars_fun' and 'mt' data tables as a new data table called 'mt_merge'.
+
+```{r}
+
+```
+
+<br>  
+
+D) Please convert the mpg variable into kilometres per litre. The formula for conversion is 1 mpg = 2.352 lkm.
+
+```{r}
+
+```
+
+<br> 
+
+
+
 
 # Sources `r emo::ji("teacher")`
 
