@@ -269,7 +269,6 @@ mtDT[,.(mean_hp = mean(hp), sd_hp = sd(hp)), by = .(engine_type)]
 # you can remove the . if you're only grouping using one variable
 mtDT[,.(mean_hp = mean(hp), sd_hp = sd(hp)), by = engine_type]
 ```
-
 # Chaining `r emo::ji("cell")`
 Chaining is like piping in `dplyr`. You only need to attach square brackets at the end, with your method, to add an additional step in the analysis. 
 
@@ -352,13 +351,14 @@ mtDT[,plot(mpg, drat, main="mpg vs. drat")]
 # Further readings `r emo::ji("student")`
 `data.table` has many other functions including:
 
-- `dcast` - pivot/wider/spread
+- `dcast()` - pivot/wider/spread
 - `melt()` - unpivot/longer/gather
 - `.SD` and `.SDcols`
 
 # Exercise `r emo::ji("sun")`
 Using `data.table` and the `mtcars.csv` data.
 ```{r}
+
 
 ```
 
