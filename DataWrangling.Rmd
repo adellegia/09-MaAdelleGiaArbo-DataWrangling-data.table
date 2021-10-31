@@ -20,11 +20,11 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 ```
 This presentation will detail data.tables data wrangling functionality, including:
 
-- Data manipulation
+- Manipulating data
 - Modifying variables
 - Summarizing data
 - Chaining
-- Joins 
+- Joining
 - Plotting data
 
 We will end the presentation with an exercise. 
@@ -45,9 +45,10 @@ Data wrangling is the process of converting raw data to another format which can
 - concise syntax: fast to type, fast to read
 - fast speed
 - memory efficiency
-- careful API lifecycle management
 - a large community
 - rich features
+
+To install the package, we use `install.packages('data.table')`.
 
 ## Importing with `fread()`
 
@@ -55,9 +56,8 @@ Data wrangling is the process of converting raw data to another format which can
 
 Let's download and read the `mtcars` dataset and call it `mt` using `fread()`.
 ```{r}
-library(dplyr)
 library(data.table)
-mt <- as.data.frame(fread("mtcars.csv"))
+mt <- fread("mtcars.csv")
 ```
 
 Let's check how fast `fread()` actually is it compared to `read.csv`. You can also write a file using `fwrite()` in `data.table` like `write.csv`. 
@@ -71,10 +71,10 @@ trial <- data.frame(matrix(runif(10000000), nrow=1000000))
 We can then see that `fread()` is at least 20 times faster! Let's check it out!
 ```{r}
 # Time taken by read.csv to import
-#system.time({trial_df <- read.csv('trial.csv')})
+system.time({trial_df <- read.csv('trial.csv')})
 
 # Time taken by fread to import
-#system.time({trial_df <- fread('trial.csv')})
+system.time({trial_df <- fread('trial.csv')})
 ```
 
 ## Creating data tables
@@ -98,6 +98,8 @@ class(airqualityDT)
 
 Now, we do the same for the `mt` data frame.
 ```{r}
+mt <- as.data.frame(fread("mtcars.csv"))
+
 class(mt)
 setDT(mt) # we do not need to assign mt to a new object
 class(mt)
@@ -138,10 +140,16 @@ For reference, the `mt` data has the following variables:
 - [,12]	**carb**  - Number of carburetors
 
 
-# Data manipulation with `data.table` `r emo::ji("car")`
+# Data manipulation `r emo::ji("car")`
 When compared to a data frame, the basic arguments within brackets are **NOT** row and column numbers but rather "i", "j" and "by". 
 
 For example, a data table named DT, DT[i, j, by] translates to "Take DT, subset rows using **i**, then calculate **j** grouped by **by**".
+
+Use data.table subset [ operator the same way you would use data.frame one, but...
+
+* no need to prefix each column with DT$ (like subset() and with() but built-in)
+* any R expression using any package is allowed in j argument, not just list of columns
+* extra argument by to compute j expression by group
 
 ```{r, fig.align='center', echo=F, out.width = "70%"}
       knitr::include_graphics("pics/data_table_syntax.png")
@@ -227,13 +235,21 @@ Data.table also makes it easy to:
 col <- c('mpg', 'cyl', 'disp')
 
 mtDT[, !col, with = FALSE]
-mtDT[, !..col, with = FALSE] # note: you need to assign this to a new object to make a new data table excluding the dropped variables
+mtDT[, !..col] 
+# note: you need to assign this to a new object to make a new data table excluding the dropped variables
 ```
 
 ## Renaming columns using `setnames()`
+`setnames()` in data.table changes the names of a data table by reference.
 ```{r}
 setnames(mtDT, 'vs', 'engine_type')
 names(mtDT) # vs renamed to engine_type
+```
+```{r}
+setnames(mtDT,5:6,c("horse_power","rear_ratio"))
+names(mtDT)
+
+setnames(mtDT,5:6,c("hp","drat"))
 ```
 
 ## Assigning and saving new variables
@@ -269,8 +285,13 @@ mtDT[,.(mean_hp = mean(hp), sd_hp = sd(hp)), by = .(engine_type)]
 # you can remove the . if you're only grouping using one variable
 mtDT[,.(mean_hp = mean(hp), sd_hp = sd(hp)), by = engine_type]
 ```
+
+We can also compute a frequency table by engine type.
+```{r}
+mtDT[, .N, engine_type]
+```
 # Chaining `r emo::ji("cell")`
-Chaining is like piping in `dplyr`. You only need to attach square brackets at the end, with your method, to add an additional step in the analysis. 
+Chaining is like piping in `dplyr`. We only need to attach square brackets at the end, with the next method, to add an additional step in the analysis. We can do multiple data table operations one after the other without having to store intermediate results.
 
 For example, we want to return the average mpg, disp, wt, qsec. Then, order the results by cyl.
 ```{r}
@@ -288,6 +309,7 @@ mtDT[, .(mean_mpg=mean(mpg),
 
 Recall that the `dplyr` piping version of this is:
 ```{r}
+library(dplyr)
 mtDT %>%
   group_by(cyl) %>%
   summarise(mean_mpg=mean(mpg),
@@ -295,6 +317,15 @@ mtDT %>%
          mean_wt=mean(wt),
          mean_qsec=mean(qsec)) %>%
   arrange(cyl)
+```
+
+We can also use piping in data tables and create new variables, x, y, z.
+```{r}
+mtDT[, x := sqrt(mpg)] %>%
+        .[, y := gear^2] %>%
+        .[, z := paste0(carname , "2")]
+
+head(mtDT[,x:z])
 ```
 
 # Joins with `data.table` `r emo::ji("family")`
@@ -328,10 +359,9 @@ Now that we know what a key is, we can use this concept to merge or join two dat
 ```{r}
 setkey(mtDT, carname)
 
-# we subset 3 data tables with 10 rows
-dt1 <- mtDT[5:25,.(carname, mpg, cyl)]
-dt2 <- mtDT[1:10, .(carname, gear)]
-dt3 <- mtDT[2:12, .(carname, disp)]
+# we subset 2 data tables from mtDT
+dt1 <- mtDT[5:25,.(carname, mpg, cyl)] # 26 rows
+dt2 <- mtDT[1:10, .(carname, gear)] # 10 rows
 
 # Inner Join
 merge(dt1, dt2, by='carname') # returns 6 rows from row 5 to 10
@@ -344,7 +374,8 @@ merge(dt1, dt2, by='carname', all = T)  # returns 25 rows
 ```
 
 # Plotting data `r emo::ji("chart")`
-```{r}
+We can also quickly present a simple scatter plot using data.table.
+```{r, results='hide'}
 mtDT[,plot(mpg, drat, main="mpg vs. drat")]
 ```
 
@@ -353,47 +384,28 @@ mtDT[,plot(mpg, drat, main="mpg vs. drat")]
 
 - `dcast()` - pivot/wider/spread
 - `melt()` - unpivot/longer/gather
-- `.SD` and `.SDcols`
 
 # Exercise `r emo::ji("sun")`
 
 Using `data.table` and the `mtcars.csv` data, please complete the following exercises.
 
-A) Please create a new column(variable) called ‘mileage_type’ that has the value ‘high’ if mpg > 30. If mpg < 30, then the value should be 'low'. 
+A) Please create a new variable called `mpg_type` that has the value ‘high’ if mpg > 30. If mpg < 30, then the value should be 'low'. 
 
 ```{r}
-
-
+# write your code here
 ```
 
-<br>
-
-B) Please import the `mtcars_fun` dataset as a data table. Please name this data table `mt_fun'.
- 
+B) Please import the `mtcars_fun` dataset as a data table. Please name this data table `mt_fun`. Then, merge the `mtcars` and `mtcars_fun` data tables as a new data table called `mt_merged`. Compute the mean and standard  deviation of tires variable by transmission variable or `am`.
 
 ```{r}
-
+# write your code here
 ```
 
-<br> 
-
-C) Please inner join the 'mtcars_fun' and 'mt' data tables as a new data table called 'mt_merge'.
+C) Please convert the mpg variable into kilometres per litre and assign it as `kpl`. The formula for conversion is 1 mpg = 2.352 kpl. Then, compute for the mean mpg, kpl, drat and sort the results by cyl using `keyby`()
 
 ```{r}
-
+# write your code here
 ```
-
-<br>  
-
-D) Please convert the mpg variable into kilometres per litre. The formula for conversion is 1 mpg = 2.352 lkm.
-
-```{r}
-
-```
-
-<br> 
-
-
 
 
 # Sources `r emo::ji("teacher")`
