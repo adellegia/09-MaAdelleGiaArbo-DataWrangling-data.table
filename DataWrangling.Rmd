@@ -54,7 +54,7 @@ To install the package, we use `install.packages('data.table')`.
 
 `data.table`'s efficiency begins from the outset with `fread()`, which is short for fast read is data.table's version of `read_csv()`.
 
-Let's download and read the `mtcars` dataset and call it `mt` using `fread()`.
+Let's import and read the `mtcars` dataset and call it `mt` using `fread()`.
 ```{r}
 library(data.table)
 mt <- fread("mtcars.csv")

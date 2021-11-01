@@ -345,7 +345,7 @@ div.tocify {
 <p><img src="pics/data_wrangling.png" width="40%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="data.table" class="section level1">
-<h1>data.table 📺</h1>
+<h1>data.table 🎥</h1>
 <p><code>data.table</code> provides an efficient and high performance alternative of base R’s data.frame when conducting data wrangling.</p>
 <p><code>data.table</code> enables this efficiency by providing:</p>
 <ul>
@@ -359,7 +359,7 @@ div.tocify {
 <div id="importing-with-fread" class="section level2">
 <h2>Importing with <code>fread()</code></h2>
 <p><code>data.table</code>’s efficiency begins from the outset with <code>fread()</code>, which is short for fast read is data.table’s version of <code>read_csv()</code>.</p>
-<p>Let’s download and read the <code>mtcars</code> dataset and call it <code>mt</code> using <code>fread()</code>.</p>
+<p>Let’s import and read the <code>mtcars</code> dataset and call it <code>mt</code> using <code>fread()</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>mt <span class="ot">&lt;-</span> <span class="fu">fread</span>(<span class="st">&quot;mtcars.csv&quot;</span>)</span></code></pre></div>
 <p>Let’s check how fast <code>fread()</code> actually is it compared to <code>read.csv</code>. You can also write a file using <code>fwrite()</code> in <code>data.table</code> like <code>write.csv</code>.</p>
@@ -371,11 +371,11 @@ div.tocify {
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Time taken by read.csv to import</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>({trial_df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;trial.csv&#39;</span>)})</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##   39.46    0.48   40.08</code></pre>
+##   66.04    1.72   68.63</code></pre>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Time taken by fread to import</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>({trial_df <span class="ot">&lt;-</span> <span class="fu">fread</span>(<span class="st">&#39;trial.csv&#39;</span>)})</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##    0.39    0.04    0.11</code></pre>
+##    1.07    0.20    0.28</code></pre>
 </div>
 <div id="creating-data-tables" class="section level2">
 <h2>Creating data tables</h2>
