@@ -342,10 +342,10 @@ div.tocify {
 <div id="whats-data-wrangling" class="section level1">
 <h1>What’s data wrangling? 🤔</h1>
 <p>Data wrangling is the process of converting raw data to another format which can be readily analyzable.</p>
-<p><img src="pics/data_wrangling.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="pics/data_wrangling.png" width="40%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="data.table" class="section level1">
-<h1>data.table 📻</h1>
+<h1>data.table 📺</h1>
 <p><code>data.table</code> provides an efficient and high performance alternative of base R’s data.frame when conducting data wrangling.</p>
 <p><code>data.table</code> enables this efficiency by providing:</p>
 <ul>
@@ -371,11 +371,11 @@ div.tocify {
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Time taken by read.csv to import</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>({trial_df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;trial.csv&#39;</span>)})</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##   41.53    0.72   42.48</code></pre>
+##   39.46    0.48   40.08</code></pre>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Time taken by fread to import</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>({trial_df <span class="ot">&lt;-</span> <span class="fu">fread</span>(<span class="st">&#39;trial.csv&#39;</span>)})</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##    0.36    0.06    0.11</code></pre>
+##    0.39    0.04    0.11</code></pre>
 </div>
 <div id="creating-data-tables" class="section level2">
 <h2>Creating data tables</h2>
@@ -515,7 +515,7 @@ div.tocify {
 <li>any R expression using any package is allowed in j argument, not just list of columns</li>
 <li>extra argument by to compute j expression by group</li>
 </ul>
-<p><img src="pics/data_table_syntax.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="pics/data_table_syntax.png" width="50%" style="display: block; margin: auto;" /></p>
 <p>Let’s compare filtering using conditional statements in a data frame vs. in a data table. You will notice one of the primary benefits of data table, you only need to pass the column names!</p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>mt[mt<span class="sc">$</span>cyl <span class="sc">==</span> <span class="dv">6</span> <span class="sc">&amp;</span> mt<span class="sc">$</span>gear <span class="sc">==</span> <span class="dv">4</span>, ]</span></code></pre></div>
 <div data-pagedtable="false">
@@ -897,7 +897,7 @@ div.tocify {
 </ol>
 <div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="co"># write your code here</span></span></code></pre></div>
 <ol start="3" style="list-style-type: upper-alpha">
-<li>Please convert the mpg variable into kilometres per litre and assign it as <code>kpl</code>. The formula for conversion is 1 mpg = 2.352 kpl. Then, compute for the mean mpg, kpl, drat and sort the results by cyl using <code>keyby</code>()</li>
+<li>Please convert the mpg variable into kilometres per litre and assign it as <code>kpl</code>. The formula for conversion is 1 mpg = 2.352 kpl. Compute for the mean mpg, kpl, drat, then group and sort the results by cyl using <code>keyby</code>()</li>
 </ol>
 <div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="co"># write your code here</span></span></code></pre></div>
 </div>
