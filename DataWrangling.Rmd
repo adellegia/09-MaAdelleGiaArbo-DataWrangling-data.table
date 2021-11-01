@@ -3,6 +3,7 @@ title: "Data Wrangling at Scale with data.table"
 output:
   html_document:
     toc: TRUE
+    keep_md: TRUE
     df_print: paged
     number_sections: FALSE
     highlight: tango
@@ -13,7 +14,6 @@ output:
     self_contained: false
     includes:
       after_body: footer.html
-    keep_md: true
 ---
 
 ```{r setup, include=FALSE}

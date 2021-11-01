@@ -3,6 +3,7 @@ title: "Data Wrangling at Scale with data.table"
 output:
   html_document:
     toc: TRUE
+    keep_md: TRUE
     df_print: paged
     number_sections: FALSE
     highlight: tango
@@ -13,7 +14,6 @@ output:
     self_contained: false
     includes:
       after_body: footer.html
-    keep_md: true
 ---
 
 
@@ -34,7 +34,7 @@ Data wrangling is the process of converting raw data to another format which can
 
 <img src="pics/data_wrangling.png" width="40%" style="display: block; margin: auto;" />
 
-# data.table 📸
+# data.table 📹
 `data.table` provides an efficient and high performance alternative of base R's data.frame when conducting data wrangling. 
 
 `data.table` enables this efficiency by providing: 
@@ -76,7 +76,7 @@ system.time({trial_df <- read.csv('trial.csv')})
 
 ```
 ##    user  system elapsed 
-##   39.96    0.86   41.00
+##   38.57    0.84   39.61
 ```
 
 ```r
@@ -86,7 +86,7 @@ system.time({trial_df <- fread('trial.csv')})
 
 ```
 ##    user  system elapsed 
-##    0.50    0.17    0.14
+##    0.47    0.10    0.09
 ```
 
 ## Creating data tables
