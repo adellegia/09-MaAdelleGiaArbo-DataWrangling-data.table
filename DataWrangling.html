@@ -371,11 +371,11 @@ div.tocify {
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Time taken by read.csv to import</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>({trial_df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;trial.csv&#39;</span>)})</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##   39.01    0.94   40.31</code></pre>
+##   39.96    0.86   41.00</code></pre>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Time taken by fread to import</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>({trial_df <span class="ot">&lt;-</span> <span class="fu">fread</span>(<span class="st">&#39;trial.csv&#39;</span>)})</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##    0.44    0.07    0.11</code></pre>
+##    0.50    0.17    0.14</code></pre>
 </div>
 <div id="creating-data-tables" class="section level2">
 <h2>Creating data tables</h2>
@@ -887,7 +887,7 @@ div.tocify {
 <h1>Plotting data 💹</h1>
 <p>We can also quickly present a simple scatter plot using data.table.</p>
 <div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>mtDT[,<span class="fu">plot</span>(mpg, drat, <span class="at">main=</span><span class="st">&quot;mpg vs. drat&quot;</span>)]</span></code></pre></div>
-<p><img src="DataWrangling_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+<p><img src="DataWrangling_files/figure-html/unnamed-chunk-28-1.png" /><!-- --></p>
 </div>
 <div id="further-readings" class="section level1">
 <h1>Further readings 👨‍🎓</h1>
