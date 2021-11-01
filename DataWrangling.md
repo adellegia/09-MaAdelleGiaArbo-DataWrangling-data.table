@@ -34,7 +34,7 @@ Data wrangling is the process of converting raw data to another format which can
 
 <img src="pics/data_wrangling.png" width="40%" style="display: block; margin: auto;" />
 
-# data.table 📷
+# data.table 📻
 `data.table` provides an efficient and high performance alternative of base R's data.frame when conducting data wrangling. 
 
 `data.table` enables this efficiency by providing: 
@@ -76,7 +76,7 @@ system.time({trial_df <- read.csv('trial.csv')})
 
 ```
 ##    user  system elapsed 
-##   38.28    0.65   39.13
+##   35.00    0.44   35.63
 ```
 
 ```r
@@ -86,7 +86,7 @@ system.time({trial_df <- fread('trial.csv')})
 
 ```
 ##    user  system elapsed 
-##    0.50    0.10    0.09
+##    0.60    0.08    0.11
 ```
 
 ## Creating data tables
@@ -1300,10 +1300,6 @@ mtDT[,plot(mpg, drat, main="mpg vs. drat")]
 ```
 
 ![](DataWrangling_files/figure-html/unnamed-chunk-28-1.png)<!-- -->
-
-```
-## NULL
-```
 
 # Further readings 👨‍🎓
 `data.table` has many other functions including:
