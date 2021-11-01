@@ -4,7 +4,7 @@ output:
   html_document:
     toc: TRUE
     keep_md: TRUE
-    df_print: paged
+    df_print: kable
     number_sections: FALSE
     highlight: tango
     theme: lumen
