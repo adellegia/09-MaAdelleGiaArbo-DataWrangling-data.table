@@ -33,6 +33,6 @@ The material in this repository is made available under the [MIT license](http:/
 
 ## Statement of contributions
 
-**Ma. Adelle Gia Arbo** prepared the flow and content of the presentation. Delivered the presentation.
+**Ma. Adelle Gia Arbo** prepared the flow and content of the presentation and exercise. Recorded and delivered the video presentation.
 
-**Viraaj Akuthota** prepared the flow and content of the presentation. 
+**Viraaj Akuthota** prepared the flow and content of the presentation and exercise. 
