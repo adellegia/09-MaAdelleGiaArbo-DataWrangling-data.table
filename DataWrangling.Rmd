@@ -179,6 +179,10 @@ mtDT[1:2]
 
 # subsetting using conditional statements
 mtDT[cyl < 5 & am == 0]
+
+mtDT[cyl %between% c(5,8)] # conditions a range of values
+
+mtDT[carname %like% "Mazda"] # finds a pattern
 ```
 
 ## Selecting columns
@@ -395,13 +399,13 @@ A) Please create a new variable called `mpg_type` that has the value ‘high’ 
 # write your code here
 ```
 
-B) Please import the `mtcars_fun` dataset as a data table. Please name this data table `mt_fun`. Then, merge the `mtcars` and `mtcars_fun` data tables as a new data table called `mt_merged`. Compute the mean and standard  deviation of tires variable by transmission variable or `am`.
+B) Please import the `mtcars_fun` dataset as a data table. Please name this data table `mt_fun`. Then, merge the `mtcars` and `mtcars_fun` data tables as a new data table called `mt_merged`. Compute the mean and standard  deviation of tires variable by transmission variable or am.
 
 ```{r}
 # write your code here
 ```
 
-C) Please convert the mpg variable into kilometres per litre and assign it as `kpl`. The formula for conversion is 1 mpg = 2.352 kpl. Compute for the mean mpg, kpl, drat, then group and sort the results by cyl using `keyby`()
+C) Please convert the mpg variable into kilometres per litre and assign it to kpl. The formula for conversion is 1 mpg = 2.352 kpl. Compute for the mean mpg, kpl, drat, then group and sort the results by cyl using `keyby`()
 
 ```{r}
 # write your code here
